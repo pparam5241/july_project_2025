@@ -1,5 +1,6 @@
 package com.param.july_project_2025.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -56,5 +57,17 @@ public class EmployeeService {
 
 	public Employee getEmployeeById(Long id) {
 		return validateAndGetEmployee(id);
+	}
+
+	public List<Employee> getEmployeeByDepartmentName(String name) {
+		return employeeRepository.findByDepartment_Name(name);
+	}
+
+	public Object getEmployeeByDepartmentName2(String name, boolean usingClass) {
+		if (usingClass) {
+			return employeeRepository.findByDepartmentName(name);
+		} else {
+			return employeeRepository.findByDepartmentNameUsingInterface(name);
+		}
 	}
 }

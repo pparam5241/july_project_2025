@@ -1,4 +1,4 @@
-package com.param.july_project_2025;
+package com.param.july_project_2025.config;
 
 import java.util.concurrent.Executor;
 

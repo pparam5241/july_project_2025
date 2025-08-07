@@ -1,7 +1,10 @@
 package com.param.july_project_2025.controllers;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,5 +59,17 @@ public class EmployeeController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
 		return ResponseEntity.ok(service.getEmployeeById(id));
+	}
+
+	@GetMapping("/department/{name}")
+	public ResponseEntity<List<Employee>> getEmployeeByDepartmentName(@PathVariable String name) {
+		return ResponseEntity.ok(service.getEmployeeByDepartmentName(name));
+	}
+
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/department2/{name}")
+	public ResponseEntity<Object> getEmployeeByDepartmentName2(@PathVariable String name,
+			@RequestParam(defaultValue = "false") boolean usingClass) {
+		return ResponseEntity.ok(service.getEmployeeByDepartmentName2(name, usingClass));
 	}
 }
