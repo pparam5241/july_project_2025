@@ -13,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -44,4 +45,7 @@ public class Employee {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(columnDefinition = "department_id")
 	private Department department;
+
+	@Transient
+	Object salaries;
 }

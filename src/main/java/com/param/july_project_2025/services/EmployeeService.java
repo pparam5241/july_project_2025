@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.param.july_project_2025.clients.PayloadClient;
 import com.param.july_project_2025.entities.Employee;
 import com.param.july_project_2025.exceptions.NotFoundException;
 import com.param.july_project_2025.models.EmployeeRequestDto;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class EmployeeService {
 
 	private final EmployeeRepository employeeRepository;
+	private final PayloadClient client;
 
 	public Employee createEmployee(EmployeeRequestDto dto) {
 		Employee employee = Employee.builder().name(dto.getName()).employmentType(dto.getEmployementType())
@@ -56,7 +58,9 @@ public class EmployeeService {
 	}
 
 	public Employee getEmployeeById(Long id) {
-		return validateAndGetEmployee(id);
+		Employee employee = validateAndGetEmployee(id);
+		employee.setSalaries(client.getSalariesByEmployeeId(id));
+		return employee;
 	}
 
 	public List<Employee> getEmployeeByDepartmentName(String name) {
